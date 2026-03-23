@@ -19,3 +19,6 @@ Tokens: [('LPAREN', '('), ('NUMERO', '20'), ('VAR', 'X'), ('RPAREN', ')')]
 Linha: (X 5 +)
 Tokens: [('LPAREN', '('), ('VAR', 'X'), ('NUMERO', '5'), ('OPERADOR', '+'), ('RPAREN', ')')]
 
+Linha: (4 4 /)
+Tokens: [('LPAREN', '('), ('NUMERO', '4'), ('NUMERO', '4'), ('OPERADOR', '/'), ('RPAREN', ')')]
+

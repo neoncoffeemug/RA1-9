@@ -13,6 +13,7 @@ linhas = lerArquivo(nomeArquivo)
 
 resultados = []
 
+# envia para output apenas tokens validos
 for linha in linhas:
     tokens = []
     valido = parseExpressao(linha, tokens)

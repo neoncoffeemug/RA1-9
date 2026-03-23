@@ -19,6 +19,7 @@ def parseExpressao(linha, tokens):
             continue
 
         if c == ")":
+            # verifica integridade dos parenteses
             parenteses -= 1
             if parenteses < 0:
                 return False
