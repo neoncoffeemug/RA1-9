@@ -1,6 +1,7 @@
 def parseExpressao(linha, tokens):
     i = 0
     tamanho = len(linha)
+    parenteses = 0
 
     while i < tamanho:
         c = linha[i]
@@ -13,10 +14,14 @@ def parseExpressao(linha, tokens):
         # parênteses
         if c == "(":
             tokens.append(("LPAREN", "("))
+            parenteses += 1
             i += 1
             continue
 
         if c == ")":
+            parenteses -= 1
+            if parenteses < 0:
+                return False
             tokens.append(("RPAREN", ")"))
             i += 1
             continue
@@ -24,8 +29,18 @@ def parseExpressao(linha, tokens):
         # números (inteiro ou decimal)
         if c.isdigit() or c == ".":
             numero = ""
+            pontos = 0
+            
+            if c == ".":
+                if i + 1 >= tamanho or not linha [i + 1].isdigit():
+                    print("Erro léxico '{c}'")
+                    return False
 
             while i < tamanho and (linha[i].isdigit() or linha[i] == "."):
+                if linha[i] ==".":
+                    pontos += 1
+                    if pontos > 1:
+                        return False
                 numero += linha[i]
                 i += 1
 
@@ -64,5 +79,9 @@ def parseExpressao(linha, tokens):
             continue
 
         # erro
-        print(f"Erro: caractere inválido '{c}'")
-        i += 1
+        return False
+    
+    if parenteses != 0:
+        return False
+
+    return True
