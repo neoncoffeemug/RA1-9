@@ -1,0 +1,30 @@
+Linha: (2 3 +)
+Tokens: [('LPAREN', '('), ('NUMERO', '2'), ('NUMERO', '3'), ('OPERADOR', '+'), ('RPAREN', ')')]
+
+Linha: (8 5 -)
+Tokens: [('LPAREN', '('), ('NUMERO', '8'), ('NUMERO', '5'), ('OPERADOR', '-'), ('RPAREN', ')')]
+
+Linha: (4 6 *)
+Tokens: [('LPAREN', '('), ('NUMERO', '4'), ('NUMERO', '6'), ('OPERADOR', '*'), ('RPAREN', ')')]
+
+Linha: (8.0 2.0 /)
+Tokens: [('LPAREN', '('), ('NUMERO', '8.0'), ('NUMERO', '2.0'), ('OPERADOR', '/'), ('RPAREN', ')')]
+
+Linha: (9 2 //)
+Tokens: [('LPAREN', '('), ('NUMERO', '9'), ('NUMERO', '2'), ('OPERADOR', '//'), ('RPAREN', ')')]
+
+Linha: (9 2 %)
+Tokens: [('LPAREN', '('), ('NUMERO', '9'), ('NUMERO', '2'), ('OPERADOR', '%'), ('RPAREN', ')')]
+
+Linha: (2.0 3 ^)
+Tokens: [('LPAREN', '('), ('NUMERO', '2.0'), ('NUMERO', '3'), ('OPERADOR', '^'), ('RPAREN', ')')]
+
+Linha: (10 MEM)
+Tokens: [('LPAREN', '('), ('NUMERO', '10'), ('VAR', 'MEM'), ('RPAREN', ')')]
+
+Linha: (MEM)
+Tokens: [('LPAREN', '('), ('VAR', 'MEM'), ('RPAREN', ')')]
+
+Linha: (2 RES)
+Tokens: [('LPAREN', '('), ('NUMERO', '2'), ('RES', 'RES'), ('RPAREN', ')')]
+
