@@ -72,3 +72,41 @@ def parseExpressao(linha, tokens):
         return False
 
     return True
+
+def estadoIdentificador(linha, i, tokens):
+    palavra = ""
+    tamanho = len(linha)
+
+    while i < tamanho and linha[i].isalpha():
+        palavra += linha[i]
+        i += 1
+
+    if palavra == "RES":
+        tokens.append(("RES", palavra))
+    else:
+        tokens.append(("VAR", palavra))
+
+    return i
+
+def estadoNumero(linha, i, tokens):
+    numero = ""
+    pontos = 0
+    tamanho = len(linha)
+
+    if linha[i] == ".":
+        if i + 1 >= tamanho or not linha[i+1].isdigit():
+            print("Erro: número malformado")
+            return -1
+
+    while i < tamanho and (linha[i].isdigit() or linha[i] == "."):
+        if linha[i] == ".":
+            pontos += 1
+            if pontos > 1:
+                print("Erro: número com múltiplos pontos")
+                return -1
+
+        numero += linha[i]
+        i += 1
+
+    tokens.append(("NUMERO", numero))
+    return i
