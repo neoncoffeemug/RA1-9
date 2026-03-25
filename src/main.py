@@ -14,8 +14,13 @@ resultados = []
 
 for linha in linhas:
     tokens = []
-    parseExpressao(linha, tokens)
 
-    resultados.append((linha, tokens))  # ← ISSO É IMPORTANTE
+    valido = parseExpressao(linha, tokens)
 
-salvarTokens("output/tokens.txt", resultados)
+    if not valido:
+        print(f"Erro léxico na linha: {linha}")
+        continue  # ignora linha inválida
+
+    resultados.append((linha, tokens))
+
+salvarTokens("../output/tokens.txt", resultados)
