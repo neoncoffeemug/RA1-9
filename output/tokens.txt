@@ -1,30 +1,30 @@
-Linha: (2 3 +)
-Tokens: [('LPAREN', '('), ('NUMERO', '2'), ('NUMERO', '3'), ('OPERADOR', '+'), ('RPAREN', ')')]
+Linha: (4 2 +)
+Tokens: [('LPAREN', '('), ('NUMERO', '4'), ('NUMERO', '2'), ('OPERADOR', '+'), ('RPAREN', ')')]
 
-Linha: (8 5 -)
-Tokens: [('LPAREN', '('), ('NUMERO', '8'), ('NUMERO', '5'), ('OPERADOR', '-'), ('RPAREN', ')')]
+Linha: (10 3 -)
+Tokens: [('LPAREN', '('), ('NUMERO', '10'), ('NUMERO', '3'), ('OPERADOR', '-'), ('RPAREN', ')')]
 
-Linha: (4 6 *)
-Tokens: [('LPAREN', '('), ('NUMERO', '4'), ('NUMERO', '6'), ('OPERADOR', '*'), ('RPAREN', ')')]
+Linha: (6 5 *)
+Tokens: [('LPAREN', '('), ('NUMERO', '6'), ('NUMERO', '5'), ('OPERADOR', '*'), ('RPAREN', ')')]
 
-Linha: (8.0 2.0 /)
-Tokens: [('LPAREN', '('), ('NUMERO', '8.0'), ('NUMERO', '2.0'), ('OPERADOR', '/'), ('RPAREN', ')')]
+Linha: (8 2 /)
+Tokens: [('LPAREN', '('), ('NUMERO', '8'), ('NUMERO', '2'), ('OPERADOR', '/'), ('RPAREN', ')')]
 
-Linha: (9 2 //)
-Tokens: [('LPAREN', '('), ('NUMERO', '9'), ('NUMERO', '2'), ('OPERADOR', '//'), ('RPAREN', ')')]
+Linha: (10 3 %)
+Tokens: [('LPAREN', '('), ('NUMERO', '10'), ('NUMERO', '3'), ('OPERADOR', '%'), ('RPAREN', ')')]
 
-Linha: (9 2 %)
-Tokens: [('LPAREN', '('), ('NUMERO', '9'), ('NUMERO', '2'), ('OPERADOR', '%'), ('RPAREN', ')')]
+Linha: (3 2 ^)
+Tokens: [('LPAREN', '('), ('NUMERO', '3'), ('NUMERO', '2'), ('OPERADOR', '^'), ('RPAREN', ')')]
 
-Linha: (2.0 3 ^)
-Tokens: [('LPAREN', '('), ('NUMERO', '2.0'), ('NUMERO', '3'), ('OPERADOR', '^'), ('RPAREN', ')')]
+Linha: ((2 3 +) 4 *)
+Tokens: [('LPAREN', '('), ('LPAREN', '('), ('NUMERO', '2'), ('NUMERO', '3'), ('OPERADOR', '+'), ('RPAREN', ')'), ('NUMERO', '4'), ('OPERADOR', '*'), ('RPAREN', ')')]
 
-Linha: (10 MEM)
-Tokens: [('LPAREN', '('), ('NUMERO', '10'), ('VAR', 'MEM'), ('RPAREN', ')')]
+Linha: (20 X)
+Tokens: [('LPAREN', '('), ('NUMERO', '20'), ('VAR', 'X'), ('RPAREN', ')')]
 
-Linha: (MEM)
-Tokens: [('LPAREN', '('), ('VAR', 'MEM'), ('RPAREN', ')')]
+Linha: (X)
+Tokens: [('LPAREN', '('), ('VAR', 'X'), ('RPAREN', ')')]
 
-Linha: (2 RES)
-Tokens: [('LPAREN', '('), ('NUMERO', '2'), ('RES', 'RES'), ('RPAREN', ')')]
+Linha: (1 RES)
+Tokens: [('LPAREN', '('), ('NUMERO', '1'), ('RES', 'RES'), ('RPAREN', ')')]
 

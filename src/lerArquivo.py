@@ -5,8 +5,7 @@ def lerArquivo(nomeArquivo):
         with open(nomeArquivo, "r", encoding="utf-8") as arquivo:
             for linha in arquivo:
                 linha = linha.strip()
-
-                if linha != "":
+                if linha:
                     linhas.append(linha)
 
         return linhas
@@ -18,5 +17,3 @@ def lerArquivo(nomeArquivo):
     except Exception as erro:
         print(f"Erro ao ler o arquivo: {erro}")
         return []
-
-

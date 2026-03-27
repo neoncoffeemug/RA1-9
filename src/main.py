@@ -3,59 +3,53 @@ from lerArquivo import lerArquivo
 from parseExpressao import parseExpressao
 from salvarTokens import salvarTokens
 from executarExpressao import executarExpressao
-from gerarAssembly import gerar_assembly
+from gerarAssembly import gerarAssembly
 
-if len(sys.argv) < 2:
-    print("Uso: python main.py <arquivo>")
-    sys.exit(1)
+def main():
+    if len(sys.argv) < 2:
+        print("Uso: python main.py <arquivo>")
+        sys.exit(1)
 
-nomeArquivo = sys.argv[1]
-linhas = lerArquivo(nomeArquivo)
+    nomeArquivo = sys.argv[1]
+    linhas = lerArquivo(nomeArquivo)
 
-resultados_tokens = []
-codigo_assembly = []
+    if not linhas:
+        print("Nenhuma linha foi lida do arquivo.")
+        sys.exit(1)
 
-memoria = {}
-historico = []
+    linhas_tokenizadas = []
+    memoria = {}
+    historico = []
 
-for linha in linhas:
-    tokens = []
-    valido = parseExpressao(linha, tokens)
+    for numero_linha, linha in enumerate(linhas, start=1):
+        tokens = []
+        valido = parseExpressao(linha, tokens)
 
-    if not valido:
-        print(f"Erro léxico: {linha}")
-        continue
+        if not valido:
+            print(f"Erro léxico na linha {numero_linha}: {linha}")
+            print()
+            continue
 
+        linhas_tokenizadas.append((linha, tokens))
 
-    resultados_tokens.append((linha, tokens))
+        try:
+            resultado = executarExpressao(tokens, memoria, historico)
+            historico.append(resultado)
 
-    try:
-        resultado = executarExpressao(tokens, memoria, historico)
-        historico.append(resultado)
+            print(f"Linha {numero_linha}: {linha}")
+            print(f"Tokens: {tokens}")
+            print(f"Resultado: {resultado}")
+            print(f"Memória atual: {memoria}")
+            print()
 
-        print("Linha:", linha)
-        print("Resultado:", resultado)
-        print()
+        except Exception as e:
+            print(f"Erro na execução da linha {numero_linha}: {linha}")
+            print(f"Motivo: {e}")
+            print()
 
-    
-        asm_linha = gerar_assembly(tokens)
+    salvarTokens("output/tokens.txt", linhas_tokenizadas)
+    gerarAssembly(linhas_tokenizadas, "output/programa.s")
+    print("Assembly gerado em output/programa.s")
 
-        codigo_assembly.append(f"; {linha}")
-        codigo_assembly.extend(asm_linha)
-        codigo_assembly.append("") 
-
-    except Exception as e:
-        print(f"Erro na execução: {linha}")
-        print("Motivo:", e)
-        print()
-
-salvarTokens("output/tokens.txt", resultados_tokens)
-
-
-with open("output/programa.s", "w") as f:
-    f.write(".text\n.global _start\n_start:\n\n")
-
-    for linha in codigo_assembly:
-        f.write(linha + "\n")
-
-    f.write("\n; fim\n")
+if __name__ == "__main__":
+    main()
