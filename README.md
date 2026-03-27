@@ -40,5 +40,5 @@ Para executar o programa, no terminal root do projeto digite ```python3 src/main
 
 ## Testar o Programa
 Com o arquivo gerado acesse o site do [cpulator](https://cpulator.01xz.net/?sys=arm-de1soc&d_audio=48000) (aqui já selecionado para armv7). Vá na caixa ```file``` , selecione ```open``` e selecione o arquivo gerado ```programa.s```.\
-Aperte F5 para compilar e carregar o arquivo. Na esquerda, em ajustes troque a exibição de número hexadecimal para decimal signed, isso atualiza a exibição dos elementos nos registradores.
+Aperte F5 para compilar e carregar o arquivo, aperte F3 para continuar a execução. Na esquerda, em ajustes troque a exibição de número hexadecimal para decimal signed, isso atualiza a exibição dos elementos nos registradores.
 
