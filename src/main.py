@@ -2,8 +2,11 @@ import sys
 from lerArquivo import lerArquivo
 from parseExpressao import parseExpressao
 from salvarTokens import salvarTokens
-from executarExpressao import executarExpressao
 from gerarAssembly import gerarAssembly
+from executarExpressao import executarExpressao
+from exibirResultados import exibirResultados
+
+MODO_TESTE = True
 
 def main():
     if len(sys.argv) < 2:
@@ -18,6 +21,7 @@ def main():
         sys.exit(1)
 
     linhas_tokenizadas = []
+    resultados = []
     memoria = {}
     historico = []
 
@@ -32,20 +36,21 @@ def main():
 
         linhas_tokenizadas.append((linha, tokens))
 
-        try:
-            resultado = executarExpressao(tokens, memoria, historico)
-            historico.append(resultado)
+        print(f"Linha {numero_linha}: {linha}")
+        print(f"Tokens: {tokens}")
 
-            print(f"Linha {numero_linha}: {linha}")
-            print(f"Tokens: {tokens}")
-            print(f"Resultado: {resultado}")
-            print(f"Memória atual: {memoria}")
-            print()
+        if MODO_TESTE: # Testa a execução da expressão
+            try:
+                resultado = executarExpressao(tokens, memoria, historico)
+                historico.append(resultado)
+                resultados.append(resultado)
+            except Exception as e:
+                print(f"Erro no teste de execução: {e}")
 
-        except Exception as e:
-            print(f"Erro na execução da linha {numero_linha}: {linha}")
-            print(f"Motivo: {e}")
-            print()
+        print()
+
+    if MODO_TESTE:
+        exibirResultados(resultados)
 
     salvarTokens("output/tokens.txt", linhas_tokenizadas)
     gerarAssembly(linhas_tokenizadas, "output/programa.s")
