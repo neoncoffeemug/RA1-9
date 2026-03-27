@@ -28,22 +28,22 @@ class GeradorAssembly:
         self.emitir(f"    LDR r0, ={rotulo}")
         self.emitir(f"    VLDR.F64 d0, [r0]")
 
-    def carregarMemoria(self, nome):
+    def carregarMemoria(self, nome): 
         self.memorias.add(nome)
         self.emitir(f"    LDR r0, =mem_{nome}")
         self.emitir(f"    VLDR.F64 d0, [r0]")
 
-    def salvarMemoria(self, nome):
+    def salvarMemoria(self, nome): 
         self.memorias.add(nome)
         self.emitir(f"    LDR r0, =mem_{nome}")
         self.emitir(f"    VSTR.F64 d0, [r0]")
 
-    def salvarResultado(self, indice):
+    def salvarResultado(self, indice): 
         self.emitir(f"    LDR r0, ={self.resultados[indice]}")
         self.emitir("    VSTR.F64 d0, [r0]")
 
 
-def construirAST(tokens):
+def construirAST(tokens): # Construir a AST a partir dos tokens
     def parseItem(pos):
         if pos >= len(tokens):
             raise Exception("Fim inesperado dos tokens")
@@ -78,7 +78,7 @@ def construirAST(tokens):
 
         raise Exception(f"Token inesperado: {tokens[pos]}")
 
-    def montarNo(itens):
+    def montarNo(itens): # Montar nó da AST com base na estrutura dos itens
         if len(itens) == 1 and itens[0]["tipo"] == "identificador":
             return {"tipo": "mem_get", "nome": itens[0]["nome"]}
 
@@ -114,7 +114,7 @@ def construirAST(tokens):
     return ast
 
 
-def gerarExpressao(gerador, no, indiceLinha):
+def gerarExpressao(gerador, no, indiceLinha): # Gera o código assembly para a expressão representada pelo nó da AST
     tipo = no["tipo"]
 
     if tipo == "numero":
@@ -166,10 +166,9 @@ def gerarExpressao(gerador, no, indiceLinha):
 
     raise Exception(f"Tipo inválido: {tipo}")
 
-
 def gerarRotinas(gerador):
     gerador.emitir("")
-    gerador.emitir("inteiro_div:")
+    gerador.emitir("inteiro_div:") # Expressão de divisão inteira
     gerador.emitir("    VCVT.S32.F64 s2, d1")
     gerador.emitir("    VMOV r4, s2")
     gerador.emitir("    VCVT.S32.F64 s3, d0")
@@ -177,58 +176,37 @@ def gerarRotinas(gerador):
     gerador.emitir("    CMP r5, #0")
     gerador.emitir("    BEQ erro_div_zero")
     gerador.emitir("    MOV r8, #0")
-    gerador.emitir("    MOV r9, #0")
-    gerador.emitir("    CMP r4, #0")
-    gerador.emitir("    RSBLT r6, r4, #0")
-    gerador.emitir("    MOVGE r6, r4")
-    gerador.emitir("    CMP r5, #0")
-    gerador.emitir("    RSBLT r7, r5, #0")
-    gerador.emitir("    MOVGE r7, r5")
-    gerador.emitir("    CMP r4, #0")
-    gerador.emitir("    EORLT r9, r9, #1")
-    gerador.emitir("    CMP r5, #0")
-    gerador.emitir("    EORLT r9, r9, #1")
     gerador.emitir("div_loop:")
-    gerador.emitir("    CMP r6, r7")
+    gerador.emitir("    CMP r4, r5")
     gerador.emitir("    BLT div_fim")
-    gerador.emitir("    SUB r6, r6, r7")
+    gerador.emitir("    SUB r4, r4, r5")
     gerador.emitir("    ADD r8, r8, #1")
     gerador.emitir("    B div_loop")
     gerador.emitir("div_fim:")
-    gerador.emitir("    CMP r9, #0")
-    gerador.emitir("    RSBNE r8, r8, #0")
     gerador.emitir("    VMOV s0, r8")
     gerador.emitir("    VCVT.F64.S32 d0, s0")
     gerador.emitir("    BX lr")
 
     gerador.emitir("")
-    gerador.emitir("inteiro_mod:")
+    gerador.emitir("inteiro_mod:") # Expressão de resto
     gerador.emitir("    VCVT.S32.F64 s2, d1")
     gerador.emitir("    VMOV r4, s2")
     gerador.emitir("    VCVT.S32.F64 s3, d0")
     gerador.emitir("    VMOV r5, s3")
     gerador.emitir("    CMP r5, #0")
     gerador.emitir("    BEQ erro_div_zero")
-    gerador.emitir("    CMP r4, #0")
-    gerador.emitir("    RSBLT r6, r4, #0")
-    gerador.emitir("    MOVGE r6, r4")
-    gerador.emitir("    CMP r5, #0")
-    gerador.emitir("    RSBLT r7, r5, #0")
-    gerador.emitir("    MOVGE r7, r5")
     gerador.emitir("mod_loop:")
-    gerador.emitir("    CMP r6, r7")
+    gerador.emitir("    CMP r4, r5")
     gerador.emitir("    BLT mod_fim")
-    gerador.emitir("    SUB r6, r6, r7")
+    gerador.emitir("    SUB r4, r4, r5")
     gerador.emitir("    B mod_loop")
     gerador.emitir("mod_fim:")
-    gerador.emitir("    CMP r4, #0")
-    gerador.emitir("    RSBMI r6, r6, #0")
-    gerador.emitir("    VMOV s0, r6")
+    gerador.emitir("    VMOV s0, r4")
     gerador.emitir("    VCVT.F64.S32 d0, s0")
     gerador.emitir("    BX lr")
 
     gerador.emitir("")
-    gerador.emitir("potencia_int:")
+    gerador.emitir("potencia_int:") # Expressão de potencia 
     gerador.emitir("    VCVT.S32.F64 s3, d0")
     gerador.emitir("    VMOV r5, s3")
     gerador.emitir(f"    LDR r0, ={gerador.const_um}")

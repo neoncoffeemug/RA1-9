@@ -17,7 +17,7 @@ def parseExpressao(linha, tokens):
     return True
 
 
-def estadoInicial(linha, i, tokens, parenteses):
+def estadoInicial(linha, i, tokens, parenteses): # Estado inicial - identificar o tipo de token
     c = linha[i]
 
     if c == " ":
@@ -29,6 +29,7 @@ def estadoInicial(linha, i, tokens, parenteses):
 
     if c == ")":
         parenteses -= 1
+
         if parenteses < 0:
             print("Erro: parêntese fechado sem abertura")
             return i, parenteses, False
@@ -56,7 +57,7 @@ def estadoInicial(linha, i, tokens, parenteses):
     return i, parenteses, False
 
 
-def estadoNumero(linha, i, tokens):
+def estadoNumero(linha, i, tokens): # Estado para processar números
     numero = ""
     pontos = 0
     tamanho = len(linha)
@@ -84,7 +85,7 @@ def estadoNumero(linha, i, tokens):
     return i, True
 
 
-def estadoDivisao(linha, i, tokens):
+def estadoDivisao(linha, i, tokens): # Estado para processar operador de divisão - "/" ou "//"
     if i + 1 < len(linha) and linha[i + 1] == "/":
         tokens.append(("OPERADOR", "//"))
         return i + 2
@@ -93,7 +94,7 @@ def estadoDivisao(linha, i, tokens):
     return i + 1
 
 
-def estadoIdentificador(linha, i, tokens):
+def estadoIdentificador(linha, i, tokens): # Estado para processar identificadores
     palavra = ""
     tamanho = len(linha)
 

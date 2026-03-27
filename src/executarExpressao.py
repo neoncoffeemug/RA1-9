@@ -1,5 +1,5 @@
 def executarExpressao(tokens, memoria, historico):
-    def parse_item(pos):
+    def parse_item(pos): # Parsear item da expressão - número, variável, operador
         if pos >= len(tokens):
             raise Exception("Fim inesperado dos tokens")
 
@@ -12,9 +12,6 @@ def executarExpressao(tokens, memoria, historico):
             return parse_expressao(pos)
 
         if tipo == "VAR":
-            # VAR sozinho só faz sentido dentro de estruturas como:
-            # (MEM)  -> leitura
-            # (V MEM) -> escrita
             return ("VAR", valor), pos + 1
 
         if tipo == "RES":
@@ -40,12 +37,10 @@ def executarExpressao(tokens, memoria, historico):
             raise Exception("Parêntese de fechamento ausente")
 
         pos += 1
-
         valor = avaliar_itens(itens)
         return valor, pos
 
-    def avaliar_itens(itens):
-        # Caso 1: (MEM)
+    def avaliar_itens(itens): 
         if len(itens) == 1:
             item = itens[0]
 
@@ -55,11 +50,9 @@ def executarExpressao(tokens, memoria, historico):
 
             raise Exception(f"Estrutura inválida com 1 item: {itens}")
 
-        # Caso 2: (N RES) ou (V MEM)
         if len(itens) == 2:
             primeiro, segundo = itens
 
-            # (N RES)
             if isinstance(segundo, tuple) and segundo[0] == "RES":
                 if not isinstance(primeiro, (int, float)):
                     raise Exception("(N RES) exige número na primeira posição")
@@ -69,29 +62,22 @@ def executarExpressao(tokens, memoria, historico):
 
                 n = int(primeiro)
 
-                if n == 0:
-                    if historico:
-                        return historico[-1]
-                    return 0.0
-
-                if n > len(historico):
+                if n == 0 or n > len(historico):
                     return 0.0
 
                 return historico[-n]
 
-            # (V MEM)
             if isinstance(segundo, tuple) and segundo[0] == "VAR":
                 nome_memoria = segundo[1]
 
                 if not isinstance(primeiro, (int, float)):
-                    raise Exception("(V MEM) exige valor numérico ou expressão válida")
+                    raise Exception("(V MEM) exige valor numérico")
 
                 memoria[nome_memoria] = float(primeiro)
                 return float(primeiro)
 
             raise Exception(f"Estrutura inválida com 2 itens: {itens}")
 
-        # Caso 3: (A B op)
         if len(itens) == 3:
             a, b, op = itens
 

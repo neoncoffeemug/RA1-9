@@ -111,26 +111,13 @@ inteiro_div:
     CMP r5, #0
     BEQ erro_div_zero
     MOV r8, #0
-    MOV r9, #0
-    CMP r4, #0
-    RSBLT r6, r4, #0
-    MOVGE r6, r4
-    CMP r5, #0
-    RSBLT r7, r5, #0
-    MOVGE r7, r5
-    CMP r4, #0
-    EORLT r9, r9, #1
-    CMP r5, #0
-    EORLT r9, r9, #1
 div_loop:
-    CMP r6, r7
+    CMP r4, r5
     BLT div_fim
-    SUB r6, r6, r7
+    SUB r4, r4, r5
     ADD r8, r8, #1
     B div_loop
 div_fim:
-    CMP r9, #0
-    RSBNE r8, r8, #0
     VMOV s0, r8
     VCVT.F64.S32 d0, s0
     BX lr
@@ -142,21 +129,13 @@ inteiro_mod:
     VMOV r5, s3
     CMP r5, #0
     BEQ erro_div_zero
-    CMP r4, #0
-    RSBLT r6, r4, #0
-    MOVGE r6, r4
-    CMP r5, #0
-    RSBLT r7, r5, #0
-    MOVGE r7, r5
 mod_loop:
-    CMP r6, r7
+    CMP r4, r5
     BLT mod_fim
-    SUB r6, r6, r7
+    SUB r4, r4, r5
     B mod_loop
 mod_fim:
-    CMP r4, #0
-    RSBMI r6, r6, #0
-    VMOV s0, r6
+    VMOV s0, r4
     VCVT.F64.S32 d0, s0
     BX lr
 
